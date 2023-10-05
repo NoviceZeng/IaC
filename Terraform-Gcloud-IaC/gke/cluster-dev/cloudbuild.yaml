@@ -1,0 +1,29 @@
+timeout: 120m
+
+steps:
+  - id: 'tf init'
+    dir: 'cluster-dev'
+    name: 'hashicorp/terraform:1.0.7'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform init -reconfigure --backend-config="bucket=project-dev-222"
+
+  - id: 'tf plan'
+    dir: 'cluster-dev'
+    name: 'hashicorp/terraform:1.0.7'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform plan -lock=false || exit 1
+
+  - id: 'tf apply'
+    dir: 'cluster-dev'
+    name: 'hashicorp/terraform:1.0.7'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - | 
+        terraform apply -auto-approve -lock=false || exit 1

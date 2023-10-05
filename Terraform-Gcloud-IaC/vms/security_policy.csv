@@ -1,0 +1,6 @@
+action,priority,src_ip_ranges,description
+deny(403),2147483647,*,default rule for Prod ENV
+allow,1000,X.119.188.0/24,akamai ip
+allow,1001,X.99.239.0/24,akamai ip
+allow,1002,X.254.137.64/26,akamai ip
+allow,1003,X.26.95.0/24,akamai ip

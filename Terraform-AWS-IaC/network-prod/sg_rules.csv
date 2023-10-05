@@ -1,0 +1,3 @@
+type,from_port,to_port,protocol,cidr_blocks,security_group_id,description
+ingress,80,80,tcp,10.0.1.0/24,sg-0256d0c64c913ec64,http port
+ingress,22,22,tcp,10.0.2.0/24,sg-0256d0c64c913ec64,ssh port

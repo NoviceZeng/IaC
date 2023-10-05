@@ -1,0 +1,19 @@
+timeout: 120m
+steps:
+    - id: 'tf init'
+      dir: 'cluster-stg'
+      name: 'hashicorp/terraform:1.0.7'
+      entrypoint: 'sh'
+      args: 
+      - '-c'
+      - |
+          terraform init -reconfigure --backend-config="bucket=project-stg"
+
+    - id: 'tf plan'
+      dir: 'cluster-stg'
+      name: 'hashicorp/terraform:1.0.7'
+      entrypoint: 'sh'
+      args: 
+      - '-c'
+      - | 
+          terraform plan -lock=false || exit 1

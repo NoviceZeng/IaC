@@ -1,0 +1,7 @@
+name,hostname,ip,machine_type,disk,zone,region,bootdisksize,bootimage,subnetname,tag
+cbc001,usep10cbc001.stubprod.com,10.171.25.57,e2-standard-8,,us-east4-a,us-east4,512,centos-cloud/centos-7,usep10-db,cbc usep10cbc001 usep10cbc usep10 usep10-db
+cbc002,usep10cbc002.stubprod.com,10.171.25.58,e2-standard-8,,us-east4-b,us-east4,512,centos-cloud/centos-7,usep10-db,cbc usep10cbc002 usep10cbc usep10 usep10-db
+cbc003,usep10cbc003.stubprod.com,10.171.25.59,e2-standard-8,,us-east4-c,us-east4,512,centos-cloud/centos-7,usep10-db,cbc usep10cbc003 usep10cbc usep10 usep10-db
+cbc004,usep10cbc004.stubprod.com,10.171.25.60,e2-standard-8,,us-east4-a,us-east4,512,centos-cloud/centos-7,usep10-db,cbc usep10cbc004 usep10cbc usep10 usep10-db
+cbc005,usep10cbc005.stubprod.com,10.171.25.61,e2-standard-8,,us-east4-b,us-east4,512,centos-cloud/centos-7,usep10-db,cbc usep10cbc005 usep10cbc usep10 usep10-db
+cbc006,usep10cbc006.stubprod.com,10.171.25.62,e2-standard-8,,us-east4-c,us-east4,512,centos-cloud/centos-7,usep10-db,cbc usep10cbc006 usep10cbc usep10 usep10-db

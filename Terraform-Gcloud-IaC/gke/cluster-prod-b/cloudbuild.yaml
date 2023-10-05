@@ -1,0 +1,29 @@
+timeout: 120m
+
+steps:
+  - id: 'tf init'
+    dir: 'cluster-prod-b'
+    name: 'hashicorp/terraform:1.0.7'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform init -reconfigure --backend-config="bucket=project-prod-b"
+
+  - id: 'tf plan'
+    dir: 'cluster-prod-b'
+    name: 'hashicorp/terraform:1.0.7'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - |
+        terraform plan -lock=false || exit 1
+
+  - id: 'tf apply'
+    dir: 'cluster-prod-b'
+    name: 'hashicorp/terraform:1.0.7'
+    entrypoint: 'sh'
+    args:
+      - '-c'
+      - | 
+        terraform apply -auto-approve -lock=false || exit 1

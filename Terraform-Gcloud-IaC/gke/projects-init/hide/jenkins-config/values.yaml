@@ -1,0 +1,72 @@
+controller:
+  adminUser: ${adminUser}
+  #adminPassword: set in helm.tf
+  serviceType: ClusterIP
+  serviceAnnotations:
+#    cloud.google.com/backend-config: '{"default": "${iap-default-backend-config}"}'
+  jenkinsUrl: ${jenkins_url}
+  csrf:
+    defaultCrumbIssuer:
+      enabled: false
+  JCasC:
+    configScripts:
+      crumb-issuer: | 
+        jenkins:
+          crumbIssuer:
+            strict:
+              checkSessionMatch: false
+      jobs-config: |
+        jobs:
+          - script: >
+              pipelineJob('prod') {
+                parameters {
+                  stringParam('SOURCE_BRANCH', '', 'this branch will be merged into the main branch and used to build the image')
+                  stringParam('MERGE_BRANCH', '', 'this is the branch that the source branch commit will be merged into')
+                  stringParam('RELEASE_VERSION', '', 'the version number of the release e.g: 1.2.3')
+                  stringParam('PREVIOUS_RELEASE_VERSION', '', 'the previous version number of the release (probably the one in prod) e.g: 1.2.3')
+                  stringParam('ARTIFACT_BUCKET', '', 'the name of the bucket that will be used to store built artifacts like rendered YAML files')
+                }
+                definition {
+                  cpsScm {
+                    scm {
+                      git {
+                        remote {
+                          credentials('source:credentials-id-from-step-4')
+                          url('https://source.developers.google.com/p/your-project/r/your-repo')
+                        }
+                        branch('*/master')
+                      }
+                    }
+                    scriptPath('pipelines/prod.groovy')
+                    lightweight()
+                  }
+                }
+              }
+
+              pipelineJob('nightly') {
+                parameters {
+                  stringParam('SOURCE_BRANCH', '', 'this branch will be used to build the image')
+                  stringParam('ARTIFACT_BUCKET', '', 'the name of the bucket that will be used to store built artifacts like rendered YAML files')
+                }
+                definition {
+                  cpsScm {
+                    scm {
+                      git {
+                        remote {
+                          credentials('source:credentials-id-from-step-4')
+                          url('https://source.developers.google.com/p/your-project/r/your-repo')
+                        }
+                        branch('*/master')
+                      }
+                    }
+                    scriptPath('pipelines/nightly.groovy')
+                    lightweight()
+                  }
+                }
+              }
+  additionalPlugins:
+  %{ for plugin in plugins ~}
+    - ${plugin}
+  %{ endfor ~}
+persistence:
+  size: ${PDSize}
