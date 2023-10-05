@@ -1,0 +1,2 @@
+interface_name,asg_name,subnet_name,vm_size,image_publisher,image_offer,image_sku,storage_account_type,vm_name,zone,disk_size_gb
+vm-pt-jmt1_nic1,ASG-Ptest-Server,Subnet-Ptest,Standard_D1s_v1,MicrosoftWindowsServer,WindowsServer,2019-Datacenter,Standard_LRS,vm-pt-jmt1,1,200

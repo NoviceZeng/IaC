@@ -1,0 +1,6 @@
+config:
+  Pulumi-Python:passwd:
+    secure: XXX
+  Pulumi-Python:user: stubhub
+  azure-native:location: EastUS
+  pulumi:template: azure-python

@@ -1,0 +1,39 @@
+parameters:
+- name: command
+  displayName: pulumi up or preview
+  type: string
+  default: preview
+  values:
+    - preview
+    - up
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+variables:
+  token: 'pul-XXX'
+
+steps:
+- ${{ if eq(parameters.command, 'preview') }}:
+  - task: Pulumi@1
+    env:
+      PULUMI_ACCESS_TOKEN: $(token)
+    displayName: Pulumi preview
+    inputs:
+      azureSubscription: 'Azure-RG-MachineLearning-prod'
+      command: 'preview'
+      stack: 'viagogo/Pulumi-Python/prod'
+
+- ${{ if eq(parameters.command, 'up') }}:
+  - task: Pulumi@1
+    env:
+      PULUMI_ACCESS_TOKEN: $(token)
+    displayName: Pulumi up
+    inputs:
+      azureSubscription: 'Azure-RG-MachineLearning-prod'
+      command: 'up'
+      args: '--yes'
+      #cwd: './RG-PerformanceTesting-prod/'
+      stack: 'viagogo/Pulumi-Python/prod'

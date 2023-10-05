@@ -1,0 +1,6 @@
+name: Pulumi-Python
+runtime:
+  name: python
+  options:
+    virtualenv: venv
+description: Azure IaaS by Pulumi Python
